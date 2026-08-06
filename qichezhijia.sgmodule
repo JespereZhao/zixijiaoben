@@ -1,0 +1,11 @@
+[MITM]
+# 汽车之家的主要域名，若使用小程序抓包，可追加相关的微信小程序域名
+hostname = %APPEND% *.autohome.com.cn
+
+[Script]
+# 1. 抓包重写规则（用于自动获取 Cookie）
+# 当你打开汽车之家 App 的签到页面或小程序签到时，Surge 会自动记录所需的 Header 凭证
+汽车之家抓包 = type=http-request,pattern=^https?:\/\/.*\.autohome\.com\.cn\/.*sign,script-path=Scripts/autohome.js,requires-body=false
+
+# 2. 每日定时签到任务（每天上午 8:30 自动运行）
+汽车之家每日签到 = type=cron,cronexp="30 8 * * *",script-path=Scripts/autohome.js,wake-system=true
